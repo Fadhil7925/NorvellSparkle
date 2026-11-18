@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#eaf5ef">
+    <meta name="description" content="Norwell Sparkle admin dashboard and support tools.">
+    <title>Admin Dashboard — Norwell Sparkle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-page">
+    <div class="topline">Norwell Sparkle · Admin workspace</div>
+    <header>
+        <nav class="nav shell" aria-label="Admin navigation">
+            <a class="brand" href="index.html" aria-label="Norwell Sparkle home">
+                <img src="assets/norwell-sparkle-logo.png" alt="Norwell Sparkle">
+            </a>
+            <div class="admin-nav-links">
+                <a href="#overview">Overview</a>
+                <a href="#services">Services</a>
+                <a href="#support">Support</a>
+            </div>
+            <a class="header-cta" href="index.html">View website</a>
+        </nav>
+    </header>
+
+    <main class="admin-main shell" id="overview">
+        <div class="admin-heading">
+            <div>
+                <p class="eyebrow">Admin workspace</p>
+                <h1>Good day, <em>Norwell Sparkle.</em></h1>
+                <p>Quick access to the site’s services, quote form, and customer-support tools.</p>
+            </div>
+            <a class="button button-primary" href="quote.html">Open quote form <span aria-hidden="true">→</span></a>
+        </div>
+
+        <aside class="admin-notice" aria-label="Important admin notice">
+            <strong>Admin access is not password-protected.</strong>
+            <span>This page is a public dashboard, not a secure customer-record system. Quote requests are emailed and are not saved here.</span>
+        </aside>
+
+        <section class="admin-cards" aria-label="Site status">
+            <article class="admin-card">
+                <span class="admin-card-label">Customer enquiries</span>
+                <strong class="admin-card-title">Email delivery</strong>
+                <p>Quote requests are sent to the business email when the Netlify email service is configured.</p>
+                <a href="mailto:foyewole16@gmail.com">Contact the business <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="admin-card">
+                <span class="admin-card-label">Website chat</span>
+                <strong class="admin-card-title">Support assistant is ready</strong>
+                <p>Answers common service and quote questions in the visitor’s browser. No AI key or server setup is required.</p>
+                <a href="index.html#home">Open the website <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="admin-card">
+                <span class="admin-card-label">Customer feedback</span>
+                <strong class="admin-card-title">Reviews section</strong>
+                <p>Customer feedback is shown on the homepage. Update the site content when verified reviews are available.</p>
+                <a href="index.html#reviews">View reviews section <span aria-hidden="true">→</span></a>
+            </article>
+        </section>
+
+        <section class="admin-section" id="services">
+            <div class="admin-section-heading">
+                <div>
+                    <p class="eyebrow">Service pages</p>
+                    <h2>Explore the services</h2>
+                </div>
+                <a href="quote.html">View quote options <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="admin-services">
+                <a class="admin-service" href="residential-cleaning.html">
+                    <span>01</span><strong>Residential cleaning</strong><span aria-hidden="true">↗</span>
+                </a>
+                <a class="admin-service" href="commercial-cleaning.html">
+                    <span>02</span><strong>Commercial &amp; office cleaning</strong><span aria-hidden="true">↗</span>
+                </a>
+                <a class="admin-service" href="deep-cleaning.html">
+                    <span>03</span><strong>Deep cleaning</strong><span aria-hidden="true">↗</span>
+                </a>
+                <a class="admin-service" href="move-cleaning.html">
+                    <span>04</span><strong>Move-in / move-out cleaning</strong><span aria-hidden="true">↗</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="admin-support" id="support">
+            <div>
+                <p class="eyebrow">Customer support</p>
+                <h2>Help customers get the right answer.</h2>
+                <p>The website assistant can answer general questions about services, pricing, availability, recurring schedules, and quote requests. For anything it cannot answer, it directs visitors to the business email.</p>
+            </div>
+            <a class="button button-secondary" href="mailto:foyewole16@gmail.com?subject=Norwell%20Sparkle%20support">Email support <span aria-hidden="true">→</span></a>
+        </section>
+    </main>
+</body>
+</html>

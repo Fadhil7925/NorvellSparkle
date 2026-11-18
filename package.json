@@ -1,0 +1,10 @@
+{
+  "name": "norwell-sparkle",
+  "private": true,
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "devDependencies": {
+    "netlify-cli": "^27.19.0"
+  }
+}

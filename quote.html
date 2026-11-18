@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#eaf5ef">
+    <meta name="description" content="Tell Norwell Sparkle about your cleaning needs and request a quote.">
+    <title>Get a Quote — Norwell Sparkle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="topline">Bringing Sparkle to Every Home</div>
+    <header>
+        <nav class="nav shell" aria-label="Main navigation">
+            <a class="brand" href="index.html#home" aria-label="Norwell Sparkle home">
+                <img src="assets/norwell-sparkle-logo.png" alt="Norwell Sparkle">
+            </a>
+            <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                <span>Menu</span>
+            </button>
+            <div class="nav-links" id="primary-navigation">
+                <a href="index.html#home">Home</a>
+                <details class="nav-dropdown">
+                    <summary>Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+                    <div class="dropdown-menu">
+                        <a href="residential-cleaning.html">Residential Cleaning</a>
+                        <a href="commercial-cleaning.html">Commercial / Office Cleaning</a>
+                        <a href="deep-cleaning.html">Deep Cleaning</a>
+                        <a href="move-cleaning.html">Move-In / Move-Out Cleaning</a>
+                    </div>
+                </details>
+                <a href="index.html#about-company">About</a>
+                <a href="index.html#community">Community</a>
+                <a href="index.html#reviews">Reviews</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+            <a class="header-cta" href="#quote-form">Get a Quote</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="pricing-section">
+            <div class="shell">
+                <div class="section-heading">
+                    <p class="eyebrow">Pricing &amp; packages</p>
+                    <h1>Compare services and build <em>your quote brief.</em></h1>
+                    <p>Choose the service that fits, then share a few details so we can prepare a quote around your space. No prices are estimated here—your quote will be confirmed with you.</p>
+                </div>
+
+                <div class="service-comparison" aria-label="Compare cleaning services">
+                    <article class="comparison-card">
+                        <span class="comparison-type">At home</span>
+                        <h2>Residential cleaning</h2>
+                        <p>Personalized cleaning for your home and regular routine.</p>
+                        <a href="residential-cleaning.html">Explore residential <span aria-hidden="true">→</span></a>
+                    </article>
+                    <article class="comparison-card">
+                        <span class="comparison-type">At work</span>
+                        <h2>Commercial &amp; office</h2>
+                        <p>Cleaning plans shaped around your workplace and business schedule.</p>
+                        <a href="commercial-cleaning.html">Explore commercial <span aria-hidden="true">→</span></a>
+                    </article>
+                    <article class="comparison-card">
+                        <span class="comparison-type">Extra attention</span>
+                        <h2>Deep cleaning</h2>
+                        <p>A more detailed clean focused on the areas you want to prioritize.</p>
+                        <a href="deep-cleaning.html">Explore deep cleaning <span aria-hidden="true">→</span></a>
+                    </article>
+                    <article class="comparison-card">
+                        <span class="comparison-type">A fresh start</span>
+                        <h2>Move-in / move-out</h2>
+                        <p>Cleaning planned around your move, space, and preferred timing.</p>
+                        <a href="move-cleaning.html">Explore move cleaning <span aria-hidden="true">→</span></a>
+                    </article>
+                </div>
+
+                <div class="quote-builder">
+                    <div class="quote-builder-heading">
+                        <p class="eyebrow">Cleaning order</p>
+                        <h2>Tell us about your clean.</h2>
+                        <p>Send your request and we’ll email Norwell Sparkle the details. Your order ID appears once the request is confirmed.</p>
+                    </div>
+                    <form id="quote-form" class="quote-form">
+                        <label class="quote-field order-honeypot" aria-hidden="true">
+                            <span>Leave this field empty</span>
+                            <input name="website" type="text" tabindex="-1" autocomplete="off">
+                        </label>
+                        <div class="quote-fields">
+                            <label class="quote-field">
+                                <span>Your name</span>
+                                <input name="name" type="text" autocomplete="name" maxlength="100" placeholder="Enter your name" required>
+                            </label>
+                            <label class="quote-field">
+                                <span>Cleaning service</span>
+                                <select name="service" required>
+                                    <option value="">Choose a service</option>
+                                    <option value="Residential cleaning">Residential cleaning</option>
+                                    <option value="Commercial &amp; office cleaning">Commercial &amp; office cleaning</option>
+                                    <option value="Deep cleaning">Deep cleaning</option>
+                                    <option value="Move-in / move-out cleaning">Move-in / move-out cleaning</option>
+                                </select>
+                            </label>
+                            <label class="quote-field">
+                                <span>Postcode / ZIP code</span>
+                                <input name="postcode" type="text" autocomplete="postal-code" maxlength="24" placeholder="Enter your postcode" required>
+                            </label>
+                            <label class="quote-field">
+                                <span>Home or space size</span>
+                                <select name="size" required>
+                                    <option value="">Choose a size</option>
+                                    <option value="Studio / 1 bedroom">Studio / 1 bedroom</option>
+                                    <option value="2–3 bedrooms">2–3 bedrooms</option>
+                                    <option value="4+ bedrooms">4+ bedrooms</option>
+                                    <option value="Small workspace">Small workspace</option>
+                                    <option value="Medium workspace">Medium workspace</option>
+                                    <option value="Large workspace">Large workspace</option>
+                                </select>
+                            </label>
+                            <label class="quote-field">
+                                <span>Preferred date <span>(optional)</span></span>
+                                <input name="preferredDate" type="date">
+                            </label>
+                        </div>
+                        <fieldset class="quote-extras">
+                            <legend>Extras you’d like to ask about <span>(optional)</span></legend>
+                            <div class="extra-options">
+                                <label><input type="checkbox" name="extras" value="Oven cleaning"><span>Oven cleaning</span></label>
+                                <label><input type="checkbox" name="extras" value="Inside fridge"><span>Inside fridge</span></label>
+                                <label><input type="checkbox" name="extras" value="Interior windows"><span>Interior windows</span></label>
+                                <label><input type="checkbox" name="extras" value="Laundry folding"><span>Laundry folding</span></label>
+                            </div>
+                            <p>Extra services are requests only; availability will be confirmed with you.</p>
+                        </fieldset>
+                        <label class="quote-field quote-notes">
+                            <span>Anything else we should know? <span>(optional)</span></span>
+                            <textarea name="notes" rows="3" maxlength="2000" placeholder="Priority rooms, timing, or other details"></textarea>
+                        </label>
+                        <button class="button button-primary quote-submit" type="submit">Place order <span aria-hidden="true">→</span></button>
+                    </form>
+                    <p id="quote-status" class="quote-status" aria-live="polite"></p>
+                    <div id="quote-email-fallback" class="quote-email-fallback" hidden>
+                        <p>Send your request by email instead. It is not submitted until you send the message.</p>
+                        <div class="quote-result-actions">
+                            <a id="quote-gmail-fallback" class="button button-primary" href="#" target="_blank" rel="noopener">Open Gmail draft</a>
+                            <a id="quote-outlook-fallback" class="button button-secondary" href="#" target="_blank" rel="noopener">Open Outlook draft</a>
+                            <a id="quote-mailto-fallback" href="#">Open device email app</a>
+                        </div>
+                    </div>
+
+                    <div id="quote-result" class="quote-result" hidden>
+                        <h3>Order confirmed</h3>
+                        <pre id="quote-brief"></pre>
+                        <div class="quote-result-actions">
+                            <button id="copy-quote" class="button button-secondary" type="button">Copy order details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="shell footer-bottom">
+            <span>© Norwell Sparkle</span>
+            <a href="index.html#home">Bringing Sparkle to Every Home</a>
+        </div>
+    </footer>
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const primaryNavigation = document.querySelector("#primary-navigation");
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+            primaryNavigation.classList.toggle("is-open", !isOpen);
+        });
+
+        primaryNavigation.addEventListener("click", (event) => {
+            if (event.target.closest("a")) {
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation menu");
+                primaryNavigation.classList.remove("is-open");
+            }
+        });
+
+        const quoteForm = document.querySelector("#quote-form");
+        const quoteResult = document.querySelector("#quote-result");
+        const quoteBrief = document.querySelector("#quote-brief");
+        const quoteStatus = document.querySelector("#quote-status");
+        const copyQuoteButton = document.querySelector("#copy-quote");
+        const quoteEmailFallback = document.querySelector("#quote-email-fallback");
+        const quoteGmailFallback = document.querySelector("#quote-gmail-fallback");
+        const quoteOutlookFallback = document.querySelector("#quote-outlook-fallback");
+        const quoteMailtoFallback = document.querySelector("#quote-mailto-fallback");
+
+        const quoteParams = new URLSearchParams(window.location.search);
+        const serviceField = quoteForm.elements.namedItem("service");
+        const sizeField = quoteForm.elements.namedItem("size");
+        const notesField = quoteForm.elements.namedItem("notes");
+
+        if ([...serviceField.options].some((option) => option.value === quoteParams.get("service"))) {
+            serviceField.value = quoteParams.get("service");
+        }
+        if ([...sizeField.options].some((option) => option.value === quoteParams.get("size"))) {
+            sizeField.value = quoteParams.get("size");
+        }
+        const availableExtras = new Set(
+            [...quoteForm.querySelectorAll('input[name="extras"]')].map((checkbox) => checkbox.value)
+        );
+        const requestedExtras = new Set(quoteParams.getAll("extras"));
+        quoteForm.querySelectorAll('input[name="extras"]').forEach((checkbox) => {
+            checkbox.checked = availableExtras.has(checkbox.value) && requestedExtras.has(checkbox.value);
+        });
+        notesField.value = (quoteParams.get("notes") || "").slice(0, 2000);
+
+        quoteForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(quoteForm);
+            const submitButton = quoteForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            quoteResult.hidden = true;
+            quoteEmailFallback.hidden = true;
+            quoteStatus.textContent = "";
+            quoteStatus.dataset.state = "";
+
+            try {
+                const response = await fetch("/.netlify/functions/orders", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        ...Object.fromEntries(formData),
+                        extras: formData.getAll("extras")
+                    })
+                });
+                let result;
+                try {
+                    result = await response.json();
+                } catch {
+                    throw new Error("Online submission failed. Please send your request using one of the email options below.");
+                }
+
+                if (!response.ok) {
+                    throw new Error(result.error || "Your order could not be confirmed. Please try again.");
+                }
+                if (typeof result.orderId !== "string") {
+                    throw new Error("We could not verify the order confirmation. Please contact us before retrying.");
+                }
+
+                const extras = formData.getAll("extras").map(String);
+                quoteBrief.textContent = [
+                    `Order ID: ${result.orderId}`,
+                    `Customer name: ${String(formData.get("name")).trim()}`,
+                    `Service: ${String(formData.get("service"))}`,
+                    `Postcode / ZIP code: ${String(formData.get("postcode")).trim()}`,
+                    `Home or space size: ${String(formData.get("size"))}`,
+                    `Preferred date: ${String(formData.get("preferredDate")) || "Not provided"}`,
+                    `Extras: ${extras.length ? extras.join(", ") : "None selected"}`,
+                    `Additional details: ${String(formData.get("notes")).trim() || "None"}`
+                ].join("\n");
+                quoteResult.hidden = false;
+                quoteStatus.textContent = "Your order details have been emailed to Norwell Sparkle.";
+                quoteStatus.dataset.state = "success";
+                quoteForm.reset();
+            } catch (error) {
+                quoteStatus.textContent = error instanceof Error
+                    ? error.message
+                    : "Your order could not be confirmed. Please try again.";
+                quoteStatus.dataset.state = "error";
+                const extras = formData.getAll("extras").map(String);
+                const emailBody = [
+                    `Customer name: ${String(formData.get("name")).trim()}`,
+                    `Service: ${String(formData.get("service"))}`,
+                    `Postcode / ZIP code: ${String(formData.get("postcode")).trim()}`,
+                    `Home or space size: ${String(formData.get("size"))}`,
+                    `Preferred date: ${String(formData.get("preferredDate")) || "Not provided"}`,
+                    `Extras: ${extras.length ? extras.join(", ") : "None selected"}`,
+                    `Additional details: ${String(formData.get("notes")).trim() || "None"}`
+                ].join("\r\n");
+                const recipient = "foyewole16@gmail.com";
+                const subject = "Cleaning order request";
+                const webmailQuery = new URLSearchParams({ to: recipient, subject, body: emailBody });
+                quoteGmailFallback.href = `https://mail.google.com/mail/?view=cm&fs=1&${webmailQuery}`;
+                quoteOutlookFallback.href = `https://outlook.live.com/mail/0/deeplink/compose?${webmailQuery}`;
+                quoteMailtoFallback.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+                quoteEmailFallback.hidden = false;
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        copyQuoteButton.addEventListener("click", async () => {
+            try {
+                if (!navigator.clipboard?.writeText) {
+                    throw new Error("Clipboard access is unavailable in this browser.");
+                }
+                await navigator.clipboard.writeText(quoteBrief.textContent);
+                quoteStatus.textContent = "Quote brief copied.";
+            } catch {
+                quoteStatus.textContent = "Could not copy automatically. Select and copy the quote brief above.";
+            }
+        });
+    </script>
+    <script src="chat.js" defer></script>
+</body>
+</html>
