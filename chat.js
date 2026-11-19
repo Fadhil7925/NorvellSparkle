@@ -10,7 +10,7 @@
                     <button class="chat-close" type="button" aria-label="Close chat">×</button>
                 </div>
                 <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions">
-                    <p class="chat-message chat-message-assistant">Hi! I’m Norwell Sparkle’s support assistant. Ask about our services, quotes, or getting in touch.</p>
+                    <p class="chat-message chat-message-assistant">Hi! I’m Norwell Sparkle’s virtual assistant. Ask about our services, quotes, or getting in touch.</p>
                 </div>
                 <p class="chat-status" id="chat-status" role="status" aria-live="polite"></p>
                 <form class="chat-form" id="chat-form">
@@ -53,11 +53,14 @@
         if (/\b(recurring|regular|weekly|fortnightly|monthly)\b/.test(normalized)) {
             return "You can ask about a recurring schedule. Share the routine you have in mind in a quote request, and the team can discuss what fits.";
         }
-        if (/\b(extra|extras|oven|fridge|window|windows|laundry)\b/.test(normalized)) {
-            return "You can request extras such as oven cleaning, inside-fridge cleaning, interior windows, or laundry folding in the quote form. Extras are subject to confirmation.";
+        if (/\b(complaint|complain|unhappy|dissatisfied|refund|re-clean|redo|issue|problem)\b/.test(normalized)) {
+            return "I’m sorry you’ve had a problem. Please email foyewole16@gmail.com with the details so the Norwell Sparkle team can review it; the team will decide any refund or re-clean.";
         }
         if (/\b(move|moving|moved|tenancy)\b/.test(normalized)) {
             return "Move-in and move-out cleaning can be planned around your space and timing. Share the details in a quote request and the team will follow up.";
+        }
+        if (/\b(extra|extras|oven|fridge|window|windows|laundry)\b/.test(normalized)) {
+            return "You can request extras such as oven cleaning, inside-fridge cleaning, interior windows, or laundry folding in the quote form. Extras are subject to confirmation.";
         }
         if (/\b(commercial|office|workplace|business)\b/.test(normalized)) {
             return "Commercial and office cleaning is planned around your workplace and business schedule. Share the space and timing you have in mind in a quote request.";
