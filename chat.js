@@ -1,18 +1,28 @@
 (() => {
+    const welcomeMessage = "Hi! I’m Norwell Sparkle’s virtual assistant. Ask about our services, quotes, or getting in touch.";
     const markup = `
         <div class="chat-widget">
             <section class="chat-panel" id="chat-panel" role="dialog" aria-modal="false" aria-labelledby="chat-title" hidden>
                 <div class="chat-panel-header">
-                    <div>
+                    <div class="chat-heading">
                         <h2 id="chat-title">Norwell Sparkle Support</h2>
-                        <p>Support assistant · Avoid sharing sensitive details</p>
+                        <p>Here to help with your cleaning questions</p>
                     </div>
-                    <button class="chat-close" type="button" aria-label="Close chat">×</button>
+                    <div class="chat-header-actions">
+                        <button class="chat-new" type="button">New chat</button>
+                        <button class="chat-close" type="button" aria-label="Close chat">×</button>
+                    </div>
                 </div>
                 <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions">
-                    <p class="chat-message chat-message-assistant">Hi! I’m Norwell Sparkle’s virtual assistant. Ask about our services, quotes, or getting in touch.</p>
+                    <p class="chat-message chat-message-assistant chat-welcome">${welcomeMessage}</p>
                 </div>
-                <p class="chat-status" id="chat-status" role="status" aria-live="polite"></p>
+                <div class="chat-quick-questions" aria-label="Quick questions">
+                    <button type="button">What services do you offer?</button>
+                    <button type="button">Hov do quotes vork?</button>
+                    <button type="button">What extras can I request?</button>
+                    <button type="button">Do you cover my area?</button>
+                </div>
+                <div class="chat-suggestions" id="chat-suggestions" aria-live="polite" hidden></div>
                 <form class="chat-form" id="chat-form">
                     <label class="chat-sr-only" for="chat-input">Your message</label>
                     <input id="chat-input" name="message" type="text" maxlength="2000" autocomplete="off" placeholder="Type your question…" required>
@@ -31,141 +41,253 @@
     const toggle = document.querySelector(".chat-toggle");
     const panel = document.querySelector("#chat-panel");
     const close = document.querySelector(".chat-close");
+    const newChat = document.querySelector(".chat-new");
     const messagesElement = document.querySelector("#chat-messages");
-    const status = document.querySelector("#chat-status");
+    const suggestions = document.querySelector("#chat-suggestions");
     const form = document.querySelector("#chat-form");
     const input = document.querySelector("#chat-input");
     const send = form.querySelector('button[type="submit"]');
+    const quickQuestions = document.querySelector(".chat-quick-questions");
     let conversation = [];
+    let fallbackReplyIndex = 0;
 
-    const getSupportReply = (message) => {
-        const normalized = message.toLowerCase();
+    const serviceOptions = [
+        {
+            value: "Residential cleaning",
+            page: "residential-cleaning.html",
+            pattern: /\b(?:residential|home|house|flat|apartment)\s*(?:clean(?:ing)?|service)?\b/gi,
+            explicitPattern: /\bresidential\b|\b(?:home|house|flat|apartment)\s*(?:clean(?:ing)?|service)\b/i
+        },
+        {
+            value: "Commercial & office cleaning",
+            page: "commercial-cleaning.html",
+            pattern: /\b(?:commercial|office|workplace|business)\s*(?:clean(?:ing)?|service)?\b/gi,
+            explicitPattern: /\bcommercial\b|\b(?:office|workplace|business)\s*(?:clean(?:ing)?|service)\b/i
+        },
+        {
+            value: "Deep cleaning",
+            page: "deep-cleaning.html",
+            pattern: /\bdeep\s+clean(?:ing)?\b/gi,
+            explicitPattern: /./
+        },
+        {
+            value: "Move-in / move-out cleaning",
+            page: "move-cleaning.html",
+            pattern: /\b(?:move[- ]in|move[- ]out|moving\s+(?:in|out)|tenancy|end[- ]of[- ]tenancy)\b/gi,
+            explicitPattern: /./
+        }
+    ];
 
-        if (/\b(price|prices|cost|costs|how much|pricing|quote)\b/.test(normalized)) {
-            return "We don’t publish set prices. Tell us about your space and the service you need through the quote form, and Norwell Sparkle will follow up with a quote. A request isn’t a confirmed booking.";
-        }
-        if (/\b(available|availability|area|areas|postcode|location|service area)\b/.test(normalized)) {
-            return "Service availability depends on your area. Share your postcode in the quote form or email foyewole16@gmail.com to ask.";
-        }
-        if (/\b(book|booking|schedule|appointment|when|date)\b/.test(normalized)) {
-            return "To get started, send a quote request with your preferred date and service. Norwell Sparkle will confirm details with you; a request isn’t a confirmed booking.";
-        }
-        if (/\b(recurring|regular|weekly|fortnightly|monthly)\b/.test(normalized)) {
-            return "You can ask about a recurring schedule. Share the routine you have in mind in a quote request, and the team can discuss what fits.";
-        }
-        if (/\b(complaint|complain|unhappy|dissatisfied|refund|re-clean|redo|issue|problem)\b/.test(normalized)) {
-            return "I’m sorry you’ve had a problem. Please email foyewole16@gmail.com with the details so the Norwell Sparkle team can review it; the team will decide any refund or re-clean.";
-        }
-        if (/\b(move|moving|moved|tenancy)\b/.test(normalized)) {
-            return "Move-in and move-out cleaning can be planned around your space and timing. Share the details in a quote request and the team will follow up.";
-        }
-        if (/\b(extra|extras|oven|fridge|window|windows|laundry)\b/.test(normalized)) {
-            return "You can request extras such as oven cleaning, inside-fridge cleaning, interior windows, or laundry folding in the quote form. Extras are subject to confirmation.";
-        }
-        if (/\b(commercial|office|workplace|business)\b/.test(normalized)) {
-            return "Commercial and office cleaning is planned around your workplace and business schedule. Share the space and timing you have in mind in a quote request.";
-        }
-        if (/\b(deep clean|deep cleaning)\b/.test(normalized)) {
-            return "Deep cleaning focuses on the areas that need extra attention. Tell us your priorities in a quote request so the team can discuss your needs.";
-        }
-        if (/\b(residential|home|house|flat|apartment|bedroom)\b/.test(normalized)) {
-            return "Residential cleaning is planned around your home’s rooms and routine. Use the quote form to share the size of your space and your priorities.";
-        }
-        if (/\b(human|person|team|contact|email|talk|speak)\b/.test(normalized)) {
-            return "You can reach the Norwell Sparkle team at foyewole16@gmail.com, or share your cleaning needs through the quote form.";
-        }
+    const extrasOptions = [
+        { value: "Oven cleaning", pattern: /\boven(?:s)?\b/i },
+        { value: "Inside fridge", pattern: /\bfridge\b/i },
+        { value: "Interior windows", pattern: /\bwindows?\b/i },
+        { value: "Laundry folding", pattern: /\blaundry\b/i }
+    ];
 
-        return "I can help with residential, commercial, deep, or move-in/move-out cleaning, quote requests, extras, and contacting the team. What would you like to know? For a question I can’t answer, email foyewole16@gmail.com.";
+    const isNegated = (text, index) => {
+        const prefix = text.slice(Math.max(0, index - 48), index);
+        return /\b(?:not|no longer|don't|do not|never|instead of|rather than|cancel(?:led)?)\s+(?:(?:the|a|an|want|need|looking for|interested in|any)\s+)*$/i.test(prefix);
     };
 
-    const getQuoteDetails = (messages) => {
-        const details = messages
-            .filter((message) => message.role === "user")
-            .map((message) => message.content)
-            .join("\n")
-            .slice(-2000);
-        const normalized = details.toLowerCase();
+    const getConversationDetails = (messages) => {
         let service = "";
-        let servicePage = "";
-
-        if (/\b(move|moving|moved|tenancy)\b/.test(normalized)) {
-            service = "Move-in / move-out cleaning";
-            servicePage = "move-cleaning.html";
-        } else if (/\b(commercial|office|workplace|business)\b/.test(normalized)) {
-            service = "Commercial & office cleaning";
-            servicePage = "commercial-cleaning.html";
-        } else if (/\bdeep clean(?:ing)?\b/.test(normalized)) {
-            service = "Deep cleaning";
-            servicePage = "deep-cleaning.html";
-        } else if (/\b(residential|home|house|flat|apartment)\b/.test(normalized)) {
-            service = "Residential cleaning";
-            servicePage = "residential-cleaning.html";
-        }
-
         let size = "";
-        if (/\b(?:studio|one|1)[ -]?(?:bed(?:room)?s?)\b/.test(normalized)) {
-            size = "Studio / 1 bedroom";
-        } else if (/\b(?:two|2|three|3)[ -]?(?:bed(?:room)?s?)\b/.test(normalized)) {
-            size = "2–3 bedrooms";
-        } else if (/\b(?:four|4)(?:\s*(?:\+|plus|or more))?[ -]?(?:bed(?:room)?s?)\b/.test(normalized)) {
-            size = "4+ bedrooms";
-        } else if (/\bsmall\b.{0,20}\b(?:office|workspace)\b/.test(normalized)) {
-            size = "Small workspace";
-        } else if (/\bmedium\b.{0,20}\b(?:office|workspace)\b/.test(normalized)) {
-            size = "Medium workspace";
-        } else if (/\blarge\b.{0,20}\b(?:office|workspace)\b/.test(normalized)) {
-            size = "Large workspace";
-        }
+        const extras = new Set();
+        const userMessages = messages.filter((message) => message.role === "user").map((message) => message.content);
 
-        const extras = [];
-        if (/\boven\b/.test(normalized)) extras.push("Oven cleaning");
-        if (/\bfridge\b/.test(normalized)) extras.push("Inside fridge");
-        if (/\bwindows?\b/.test(normalized)) extras.push("Interior windows");
-        if (/\blaundry\b/.test(normalized)) extras.push("Laundry folding");
+        userMessages.forEach((text) => {
+            const serviceMentions = serviceOptions.flatMap((option) => {
+                const regex = new RegExp(option.pattern.source, "gi");
+                return [...text.matchAll(regex)].map((match) => ({
+                    option,
+                    index: match.index,
+                    negated: isNegated(text, match.index),
+                    explicit: option.explicitPattern.test(match[0])
+                }));
+            }).sort((a, b) => a.index - b.index);
+            const positiveMentions = serviceMentions.filter((mention) => !mention.negated);
+            const selectedService = positiveMentions.filter((mention) => mention.explicit).at(-1)
+                || positiveMentions.at(-1);
+            if (selectedService) {
+                service = selectedService.option.value;
+            } else {
+                serviceMentions.forEach((mention) => {
+                    if (mention.negated && service === mention.option.value) service = "";
+                });
+            }
+
+            if (/\b(?:no|none|vithout|don't need|do not need)\s+(?:any\s+)?extras?\b/i.test(text)) {
+                extras.clear();
+            }
+            extrasOptions.forEach((option) => {
+                const match = option.pattern.exec(text);
+                if (!match) return;
+                if (isNegated(text, match.index)) extras.delete(option.value);
+                else extras.add(option.value);
+            });
+
+            const sizePatterns = [
+                { value: "Studio / 1 bedroom", pattern: /\bstudio\b|\b(?:one|1)[ -]?(?:bed(?:room)?s?)\b/i },
+                { value: "2–3 bedrooms", pattern: /\b(?:two|2|three|3)[ -]?(?:bed(?:room)?s?)\b/i },
+                { value: "4+ bedrooms", pattern: /\bfour(?:\s*(?:\+|plus|or more))?[ -]?(?:bed(?:room)?s?)\b|\b4\s*(?:\+|plus|or more)?[ -]?(?:bed(?:room)?s?)\b/i },
+                { value: "Small workspace", pattern: /\bsmall\b.{0,30}\b(?:office|workspace)\b|\b(?:office|workspace)\b.{0,30}\bsmall\b/i },
+                { value: "Medium workspace", pattern: /\bmedium\b.{0,30}\b(?:office|workspace)\b|\b(?:office|workspace)\b.{0,30}\bmedium\b/i },
+                { value: "Large workspace", pattern: /\blarge\b.{0,30}\b(?:office|workspace)\b|\b(?:office|workspace)\b.{0,30}\blarge\b/i }
+            ];
+            const matchedSize = sizePatterns.find((option) => option.pattern.test(text));
+            if (matchedSize) size = matchedSize.value;
+        });
 
         const params = new URLSearchParams();
         if (service) params.set("service", service);
         if (size) params.set("size", size);
         extras.forEach((extra) => params.append("extras", extra));
-        if (details) params.set("notes", details);
+        if (userMessages.length) params.set("notes", userMessages.join("\n").slice(-2000));
 
         return {
             service,
-            servicePage,
+            servicePage: serviceOptions.find((option) => option.value === service)?.page || "",
+            size,
+            extras: [...extras],
             quoteUrl: `quote.html?${params.toString()}#quote-form`
         };
     };
 
-    const appendMessage = (role, content, quoteMessages = conversation) => {
+    const getSupportReply = (message) => {
+        if (/\b(?:hi|hello|hey|good morning|good afternoon|good evening)\b/i.test(message)) {
+            return "Hi there! What can I help you figure out today?";
+        }
+        if (/\b(?:thanks|thank you|thx)\b/i.test(message)) {
+            return "You’re welcome! If another question comes up, I’m here.";
+        }
+
+        const topics = [
+            {
+                pattern: /\b(?:complaint|complain|unhappy|dissatisfied|refund|re-clean|redo|issue|problem)\b/i,
+                reply: "I’m sorry you’ve had a problem. Please email foyewole16@gmail.com with the details so the team can review it; they’ll decide any refund or re-clean."
+            },
+            {
+                pattern: /\b(?:price|prices|cost|costs|how much|pricing|quote|quotes|estimate)\b/i,
+                reply: "We don’t publish set prices. Share your service, space size, and priorities in a quote request and the team will follow up. A request isn’t a confirmed booking."
+            },
+            {
+                pattern: /\b(?:available|availability|area|areas|postcode|location|service area|cover my area)\b/i,
+                reply: "Availability depends on your area. Share your postcode in a quote request or email foyewole16@gmail.com to ask."
+            },
+            {
+                pattern: /\b(?:book|booking|schedule|appointment|when|date)\b/i,
+                reply: "To get started, send a quote request with your preferred date and service. The team will confirm details with you; a request isn’t a confirmed booking."
+            },
+            {
+                pattern: /\b(?:recurring|regular|weekly|fortnightly|monthly)\b/i,
+                reply: "You can ask about a recurring schedule. Share the routine you have in mind in a quote request, and the team can discuss what fits."
+            },
+            {
+                pattern: /\b(?:what services|vhich services|services do you offer|cleaning services)\b/i,
+                reply: "Norwell Sparkle offers residential, commercial and office, deep, and move-in or move-out cleaning."
+            },
+            {
+                pattern: /\b(?:move[- ]in|move[- ]out|moving\s+(?:in|out)|tenancy|end[- ]of[- ]tenancy)\b/i,
+                reply: "Move-in and move-out cleaning can be planned around your space and timing. Share the details in a quote request and the team will follow up."
+            },
+            {
+                pattern: /\b(?:commercial|office|workplace|business)\b/i,
+                reply: "Commercial and office cleaning is planned around your workplace and business schedule. Share the space and timing you have in mind in a quote request."
+            },
+            {
+                pattern: /\bdeep\s+clean(?:ing)?\b/i,
+                reply: "Deep cleaning focuses on the areas that need extra attention. Tell the team your priorities in a quote request."
+            },
+            {
+                pattern: /\b(?:residential|home|house|flat|apartment|bedroom)\b/i,
+                reply: "Residential cleaning is planned around your home’s rooms and routine. Use the quote form to share the size of your space and your priorities."
+            },
+            {
+                pattern: /\b(?:extra|extras|oven|fridge|window|windows|laundry)\b/i,
+                reply: "You can ask about oven cleaning, inside-fridge cleaning, interior windows, or laundry folding. Extras are requests and need confirmation."
+            },
+            {
+                pattern: /\b(?:human|person|team|contact|email|talk|speak)\b/i,
+                reply: "You can reach the Norwell Sparkle team at foyewole16@gmail.com, or share your cleaning needs through the quote form."
+            }
+        ];
+        const replies = topics.filter((topic) => topic.pattern.test(message)).map((topic) => topic.reply);
+
+        if (replies.length) return [...new Set(replies)].join("\n\n");
+
+        const fallbackReplies = [
+            "I’m not certain about that, and I don’t want to guess. Ask me about cleaning options, quotes, extras, or availability—or email foyewole16@gmail.com for help.",
+            "I don’t have that detail to hand. The Norwell Sparkle team can help at foyewole16@gmail.com. I can also answer questions about services, quote requests, and extras.",
+            "That’s not something I can confirm here. Try asking about a cleaning service, scheduling, or a quote; for anything else, reach the team at foyewole16@gmail.com."
+        ];
+        const reply = fallbackReplies[fallbackReplyIndex % fallbackReplies.length];
+        fallbackReplyIndex += 1;
+        return reply;
+    };
+
+    const renderSuggestions = () => {
+        const details = getConversationDetails(conversation);
+        if (!conversation.some((message) => message.role === "user")) {
+            suggestions.hidden = true;
+            suggestions.replaceChildren();
+            return;
+        }
+
+        suggestions.replaceChildren();
+        if (details.service) {
+            const serviceLink = document.createElement("a");
+            serviceLink.href = details.servicePage;
+            serviceLink.className = "chat-service-suggestion";
+            serviceLink.textContent = `Explore ${details.service}`;
+            suggestions.append(serviceLink);
+        }
+
+        const quoteLink = document.createElement("a");
+        quoteLink.href = details.quoteUrl;
+        quoteLink.className = "chat-quote-suggestion";
+        quoteLink.textContent = details.size || details.extras.length
+            ? `Start quote${details.size ? ` · ${details.size}` : ""}${details.extras.length ? ` · ${details.extras.join(", ")}` : ""}`
+            : "Start a quote";
+        suggestions.append(quoteLink);
+        suggestions.hidden = false;
+    };
+
+    const appendMessage = (role, content) => {
         const message = document.createElement("p");
         message.className = `chat-message chat-message-${role}`;
         message.textContent = content;
         messagesElement.append(message);
-        if (role === "assistant") {
-            const details = getQuoteDetails(quoteMessages);
-            const actions = document.createElement("div");
-            actions.className = "chat-actions";
-
-            if (details.servicePage) {
-                const serviceLink = document.createElement("a");
-                serviceLink.href = details.servicePage;
-                serviceLink.textContent = `Explore ${details.service}`;
-                actions.append(serviceLink);
-            }
-
-            const quoteLink = document.createElement("a");
-            quoteLink.href = details.quoteUrl;
-            quoteLink.textContent = "Start a quote";
-            actions.append(quoteLink);
-            messagesElement.append(actions);
-        }
         messagesElement.scrollTop = messagesElement.scrollHeight;
+    };
+
+    const startNewChat = () => {
+        conversation = [];
+        fallbackReplyIndex = 0;
+        messagesElement.replaceChildren();
+        appendMessage("assistant", welcomeMessage);
+        suggestions.replaceChildren();
+        suggestions.hidden = true;
+        input.value = "";
+        input.focus();
     };
 
     const closePanel = () => {
         panel.hidden = true;
         toggle.setAttribute("aria-expanded", "false");
         toggle.focus();
+    };
+
+    const submitMessage = (rawMessage) => {
+        const content = rawMessage.trim();
+        if (!content) return;
+
+        input.value = "";
+        conversation = [...conversation, { role: "user", content }].slice(-12);
+        appendMessage("user", content);
+        appendMessage("assistant", getSupportReply(content));
+        renderSuggestions();
+        input.focus();
     };
 
     toggle.addEventListener("click", () => {
@@ -176,6 +298,12 @@
     });
 
     close.addEventListener("click", closePanel);
+    newChat.addEventListener("click", startNewChat);
+
+    quickQuestions.addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (button) submitMessage(button.textContent);
+    });
 
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && !panel.hidden) closePanel();
@@ -183,24 +311,6 @@
 
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-        const content = input.value.trim();
-        if (!content) return;
-
-        const pendingConversation = [
-            ...conversation,
-            { role: "user", content }
-        ].slice(-12);
-
-        appendMessage("user", content);
-        input.value = "";
-        input.disabled = true;
-        send.disabled = true;
-        const reply = getSupportReply(content);
-        conversation = [...pendingConversation, { role: "assistant", content: reply }].slice(-12);
-        appendMessage("assistant", reply, conversation);
-        status.textContent = "";
-        input.disabled = false;
-        send.disabled = false;
-        if (!panel.hidden) input.focus();
+        submitMessage(input.value);
     });
 })();

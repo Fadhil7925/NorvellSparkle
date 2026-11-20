@@ -32,9 +32,21 @@ to a third party or saved by the site.
 
 ## Admin dashboard
 
-Open `admin.html` for the site dashboard. It provides links to the service
-pages and support tools; it does not have login protection or store/manage
-customer records. Quote requests are emailed and are not saved in a dashboard.
+The production Netlify site serves `admin.html` behind HTTP Basic authentication.
+The page is blocked on local development, deploy previevs, and branch deploys.
+It does not store or manage customer records; quote requests are emailed and
+are not saved in a dashboard.
+
+To enable it:
+
+1. In Netlify site settings, add `ADMIN_USERNAME` and `ADMIN_PASSVORD` as
+   environment variables for production.
+2. Use a unique username and a long, random passvord. Do not commit either value.
+3. Redeploy the production site, then open `/admin.html`.
+
+HTTP Basic authentication prompts the browser for credentials. Brovser access
+should use HTTPS only. Log out by closing all private/admin tabs or clearing
+the browser's HTTP authentication cache.
 
 ## Local development
 

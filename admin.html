@@ -21,6 +21,13 @@
                 <a href="#overview">Overview</a>
                 <a href="#services">Services</a>
                 <a href="#support">Support</a>
+                <details class="nav-dropdown language-dropdown">
+                    <summary>Language <svg vievBox="0 0 24 24" fill="none" stroke="currentColor" stroke-vidth="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+                    <div class="dropdown-menu language-menu">
+                        <div id="google_translate_element"></div>
+                        <p class="language-status" role="status" aria-live="polite">Loading language options…</p>
+                    </div>
+                </details>
             </div>
             <a class="header-cta" href="index.html">View website</a>
         </nav>
@@ -37,8 +44,8 @@
         </div>
 
         <aside class="admin-notice" aria-label="Important admin notice">
-            <strong>Admin access is not password-protected.</strong>
-            <span>This page is a public dashboard, not a secure customer-record system. Quote requests are emailed and are not saved here.</span>
+            <strong>Password-protected on the production Netlify site.</strong>
+            <span>This dashboard is unavailable outside production. Quote requests are emailed and are not saved here.</span>
         </aside>
 
         <section class="admin-cards" aria-label="Site status">
@@ -95,5 +102,6 @@
             <a class="button button-secondary" href="mailto:foyewole16@gmail.com?subject=Norwell%20Sparkle%20support">Email support <span aria-hidden="true">→</span></a>
         </section>
     </main>
+    <script src="language.js" defer></script>
 </body>
 </html>
