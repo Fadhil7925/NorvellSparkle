@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#083d3a">
+    <meta name="description" content="Learn about NorvellSparkle Carpet &amp; Upholstery Cleaning, planned around the fabrics and surfaces you want refreshed.">
+    <title>Carpet &amp; Upholstery Cleaning — NorvellSparkle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="topline">Bringing Sparkle to Every Home</div>
+    <header>
+        <nav class="nav shell" aria-label="Main navigation">
+            <a class="brand" href="index.html" aria-label="NorvellSparkle home"><img src="assets/NorwellSparkle-header-logo.png" alt="NorvellSparkle"></a>
+            <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span>
+            </button>
+            <div class="nav-links" id="primary-navigation">
+                <a href="index.html#home">Home</a>
+                <details class="nav-dropdown">
+                    <summary>Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+                    <div class="dropdown-menu">
+                        <a href="residential-cleaning.html">Home Cleaning</a>
+                        <a href="commercial-cleaning.html">Office &amp; Commercial Cleaning</a>
+                        <a href="deep-cleaning.html">Deep Cleaning</a>
+                        <a href="carpet-upholstery-cleaning.html" aria-current="page">Carpet &amp; Upholstery Cleaning</a>
+                    </div>
+                </details>
+                <a href="index.html#about-company">About</a>
+                <a href="index.html#community">Community</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="index.html#contact">Contact</a>
+                <details class="nav-dropdown language-dropdown">
+                    <summary>Language <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+                    <div class="dropdown-menu language-menu">
+                        <div id="google_translate_element"></div>
+                        <p class="language-status" role="status" aria-live="polite">Loading language options…</p>
+                    </div>
+                </details>
+                <a class="nav-quote" href="quote.html?service=Carpet%20%26%20Upholstery%20Cleaning#quote-form">Get a quote</a>
+            </div>
+            <a class="header-cta" href="quote.html?service=Carpet%20%26%20Upholstery%20Cleaning#quote-form">Get a quote</a>
+        </nav>
+    </header>
+    <main class="service-detail" id="main-content" tabindex="-1">
+        <section class="service-detail-card shell">
+            <p class="eyebrow">Cleaning services · Fabric and floor care</p>
+            <h1>Carpet &amp; Upholstery Cleaning for a <em>fresher feel.</em></h1>
+            <p class="service-detail-intro">Refresh carpets, rugs, sofas, and other upholstered pieces with a clean planned around the surfaces you have and the areas that need attention. Share any spills, high-traffic spots, or fabric-care concerns so we can discuss the right approach.</p>
+            <div class="service-detail-actions">
+                <a class="button button-primary" href="quote.html?service=Carpet%20%26%20Upholstery%20Cleaning#quote-form">Get a quote <span aria-hidden="true">→</span></a>
+                <a class="button button-secondary" href="index.html#home">Back to home</a>
+            </div>
+            <div class="service-detail-info">
+                <article>
+                    <h2>Tell us what needs refreshing</h2>
+                    <p>Let us know which carpets, rugs, or upholstered items you have in mind and where you would like us to focus.</p>
+                </article>
+                <article>
+                    <h2>What to include in your request</h2>
+                    <ul>
+                        <li>The items and approximate areas to be cleaned</li>
+                        <li>Any stains, high-traffic areas, or fabric concerns</li>
+                        <li>Your preferred timing and any questions</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="shell footer-bottom"><span>© NorvellSparkle</span><a href="index.html#home">Bringing Sparkle to Every Home</a></div>
+    </footer>
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const primaryNavigation = document.querySelector("#primary-navigation");
+        menuToggle.addEventListener("click", () => {
+            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+            primaryNavigation.classList.toggle("is-open", !isOpen);
+        });
+        primaryNavigation.addEventListener("click", (event) => {
+            if (event.target.closest("a")) {
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation menu");
+                primaryNavigation.classList.remove("is-open");
+            }
+        });
+    </script>
+    <script src="chat.js" defer></script>
+    <script src="language.js" defer></script>
+</body>
+</html>

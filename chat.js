@@ -1,11 +1,11 @@
 (() => {
-    const welcomeMessage = "Hi! I’m Norwell Sparkle’s virtual assistant. Ask about our services, quotes, or getting in touch.";
+    const welcomeMessage = "Hi! I’m NorvellSparkle’s virtual assistant. Ask about our services, quotes, or getting in touch.";
     const markup = `
         <div class="chat-widget">
             <section class="chat-panel" id="chat-panel" role="dialog" aria-modal="false" aria-labelledby="chat-title" hidden>
                 <div class="chat-panel-header">
                     <div class="chat-heading">
-                        <h2 id="chat-title">Norwell Sparkle Support</h2>
+                        <h2 id="chat-title">NorvellSparkle Support</h2>
                         <p>Here to help with your cleaning questions</p>
                     </div>
                     <div class="chat-header-actions">
@@ -28,7 +28,7 @@
                     <input id="chat-input" name="message" type="text" maxlength="2000" autocomplete="off" placeholder="Type your question…" required>
                     <button class="chat-send" type="submit">Send</button>
                 </form>
-                <p class="chat-disclaimer">This support assistant runs in your browser. For a quote, use <a href="quote.html">Get a Quote</a>.</p>
+                <p class="chat-disclaimer">This support assistant runs in your browser. For a quote, use <a href="quote.html#quote-form">Get a quote</a>.</p>
             </section>
             <button class="chat-toggle" type="button" aria-expanded="false" aria-controls="chat-panel">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 20l.9-4.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/></svg>
@@ -53,26 +53,26 @@
 
     const serviceOptions = [
         {
-            value: "Residential cleaning",
+            value: "Home Cleaning",
             page: "residential-cleaning.html",
             pattern: /\b(?:residential|home|house|flat|apartment)\s*(?:clean(?:ing)?|service)?\b/gi,
             explicitPattern: /\bresidential\b|\b(?:home|house|flat|apartment)\s*(?:clean(?:ing)?|service)\b/i
         },
         {
-            value: "Commercial & office cleaning",
+            value: "Office & Commercial Cleaning",
             page: "commercial-cleaning.html",
             pattern: /\b(?:commercial|office|workplace|business)\s*(?:clean(?:ing)?|service)?\b/gi,
             explicitPattern: /\bcommercial\b|\b(?:office|workplace|business)\s*(?:clean(?:ing)?|service)\b/i
         },
         {
-            value: "Deep cleaning",
+            value: "Deep Cleaning",
             page: "deep-cleaning.html",
             pattern: /\bdeep\s+clean(?:ing)?\b/gi,
             explicitPattern: /./
         },
         {
-            value: "Carpet & upholstery cleaning",
-            page: "quote.html",
+            value: "Carpet & Upholstery Cleaning",
+            page: "carpet-upholstery-cleaning.html",
             pattern: /\b(?:carpet|rug|sofa|upholstery)\s*(?:clean(?:ing)?|service)?\b/gi,
             explicitPattern: /\b(?:carpet|rug|sofa|upholstery)\b/i
         }
@@ -185,23 +185,23 @@
             },
             {
                 pattern: /\b(?:what services|vhich services|services do you offer|cleaning services)\b/i,
-                reply: "Norwell Sparkle offers residential, commercial and office, deep, and move-in or move-out cleaning."
+                reply: "NorvellSparkle offers Home Cleaning, Office & Commercial Cleaning, Deep Cleaning, and Carpet & Upholstery Cleaning."
             },
             {
                 pattern: /\b(?:move[- ]in|move[- ]out|moving\s+(?:in|out)|tenancy|end[- ]of[- ]tenancy)\b/i,
-                reply: "Move-in and move-out cleaning can be planned around your space and timing. Share the details in a quote request and the team will follow up."
+                reply: "We can plan Home Cleaning or Deep Cleaning around your move, depending on your space and priorities. Share your timing and handoff details in a quote request."
             },
             {
                 pattern: /\b(?:commercial|office|workplace|business)\b/i,
-                reply: "Commercial and office cleaning is planned around your workplace and business schedule. Share the space and timing you have in mind in a quote request."
+                reply: "Office & Commercial Cleaning is planned around your workplace and business schedule. Share the space and timing you have in mind in a quote request."
             },
             {
                 pattern: /\bdeep\s+clean(?:ing)?\b/i,
-                reply: "Deep cleaning focuses on the areas that need extra attention. Tell the team your priorities in a quote request."
+                reply: "Deep Cleaning focuses on the areas that need extra attention. Tell the team your priorities in a quote request."
             },
             {
                 pattern: /\b(?:residential|home|house|flat|apartment|bedroom)\b/i,
-                reply: "Residential cleaning is planned around your home’s rooms and routine. Use the quote form to share the size of your space and your priorities."
+                reply: "Home Cleaning is planned around your rooms and routine. Use the quote form to share the size of your space and your priorities."
             },
             {
                 pattern: /\b(?:extra|extras|oven|fridge|window|windows|laundry)\b/i,
@@ -209,7 +209,7 @@
             },
             {
                 pattern: /\b(?:human|person|team|contact|email|talk|speak)\b/i,
-                reply: "You can reach the Norwell Sparkle team at foyewole16@gmail.com, or share your cleaning needs through the quote form."
+                reply: "You can reach the NorvellSparkle team at foyewole16@gmail.com, or share your cleaning needs through the quote form."
             }
         ];
         const replies = topics.filter((topic) => topic.pattern.test(message)).map((topic) => topic.reply);
@@ -218,7 +218,7 @@
 
         const fallbackReplies = [
             "I’m not certain about that, and I don’t want to guess. Ask me about cleaning options, quotes, extras, or availability—or email foyewole16@gmail.com for help.",
-            "I don’t have that detail to hand. The Norwell Sparkle team can help at foyewole16@gmail.com. I can also answer questions about services, quote requests, and extras.",
+            "I don’t have that detail to hand. The NorvellSparkle team can help at foyewole16@gmail.com. I can also answer questions about services, quote requests, and extras.",
             "That’s not something I can confirm here. Try asking about a cleaning service, scheduling, or a quote; for anything else, reach the team at foyewole16@gmail.com."
         ];
         const reply = fallbackReplies[fallbackReplyIndex % fallbackReplies.length];
@@ -247,8 +247,8 @@
         quoteLink.href = details.quoteUrl;
         quoteLink.className = "chat-quote-suggestion";
         quoteLink.textContent = details.size || details.extras.length
-            ? `Start quote${details.size ? ` · ${details.size}` : ""}${details.extras.length ? ` · ${details.extras.join(", ")}` : ""}`
-            : "Start a quote";
+            ? `Get a quote${details.size ? ` · ${details.size}` : ""}${details.extras.length ? ` · ${details.extras.join(", ")}` : ""}`
+            : "Get a quote";
         suggestions.append(quoteLink);
         suggestions.hidden = false;
     };

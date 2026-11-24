@@ -183,7 +183,7 @@ header {
     right: 0;
     left: auto;
     width: 250px;
-    max-width: calc(100vv - 32px);
+    max-width: calc(100vw - 32px);
     padding: 14px;
 }
 
@@ -961,7 +961,7 @@ h1 em,
 }
 
 .quote-field > span span,
-.quote-extras legend span {
+.quote-extras > summary span {
     color: var(--muted);
     font-weight: 500;
 }
@@ -999,11 +999,43 @@ h1 em,
     border: 0;
 }
 
-.quote-extras legend {
+.quote-extras > summary {
+    width: fit-content;
     margin-bottom: 12px;
-    color: var(--ink);
+    color: var(--teal);
     font-size: 12px;
     font-weight: 700;
+    cursor: pointer;
+    text-underline-offset: 3px;
+}
+
+.quote-extras > summary span {
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.quote-extras:not([open]) > summary { margin-bottom: 0; }
+.quote-extras > summary:focus-visible { outline: 3px solid var(--mint-strong); outline-offset: 4px; }
+
+.extra-options label[hidden] { display: none; }
+
+.quote-extras > p {
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.quote-extras > summary::-webkit-details-marker {
+    color: var(--teal);
+}
+
+.quote-extras > summary:hover {
+    color: var(--ink);
+}
+
+.quote-extras > summary::marker {
+    color: var(--teal);
 }
 
 .extra-options {
@@ -1032,13 +1064,6 @@ h1 em,
     height: 15px;
     margin: 0;
     accent-color: var(--teal);
-}
-
-.quote-extras > p {
-    margin: 10px 0 0;
-    color: var(--muted);
-    font-size: 11px;
-    line-height: 1.6;
 }
 
 .quote-notes {
@@ -1896,7 +1921,7 @@ h1 em,
 
 .admin-cards {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
 }
 

@@ -14,11 +14,12 @@ const makeRequest = (body, method = "POST") => new Request("https://example.test
 
 const validOrder = {
     name: "Sam Customer",
-    service: "Deep cleaning",
+    email: "sam@example.test",
+    service: "Deep Cleaning",
     postcode: "PE11 1AA",
     size: "2–3 bedrooms",
     preferredDate: "2026-12-01",
-    extras: ["Oven cleaning"],
+    extras: [],
     notes: "Please focus on the kitchen."
 };
 
@@ -52,9 +53,24 @@ test("sends the order details and returns the generated order ID only after acce
     assert.deepEqual(email.to, ["foyewole16@gmail.com"]);
     assert.match(email.subject, new RegExp(result.orderId));
     assert.match(email.text, /Customer name: Sam Customer/);
-    assert.match(email.text, /Service: Deep cleaning/);
+    assert.match(email.text, /Service: Deep Cleaning/);
     assert.match(email.text, /Postcode \/ ZIP code: PE11 1AA/);
     assert.match(email.text, /Preferred date: 2026-12-01/);
+});
+
+test("accepts each published service name", async () => {
+    globalThis.fetch = async () => new Response("{}", { status: 200 });
+    const services = [
+        "Home Cleaning",
+        "Office & Commercial Cleaning",
+        "Deep Cleaning",
+        "Carpet & Upholstery Cleaning"
+    ];
+
+    for (const service of services) {
+        const response = await handler(makeRequest({ ...validOrder, service }));
+        assert.equal(response.status, 200, `${service} should be accepted`);
+    }
 });
 
 test("rejects invalid order values without sending an email", async () => {

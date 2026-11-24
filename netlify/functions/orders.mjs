@@ -1,6 +1,10 @@
 import { randomUUID } from "node:crypto";
 
 const services = new Set([
+    "Home Cleaning",
+    "Office & Commercial Cleaning",
+    "Deep Cleaning",
+    "Carpet & Upholstery Cleaning",
     "Residential cleaning",
     "Commercial & office cleaning",
     "Deep cleaning",
@@ -121,7 +125,7 @@ export default async (request) => {
             body: JSON.stringify({
                 from,
                 to: ["foyewole16@gmail.com"],
-                subject: `Quote request: ${orderId}`,
+                subject: `NorvellSparkle quote request: ${orderId}`,
                 text: emailText
             }),
             signal: AbortSignal.timeout(10000)

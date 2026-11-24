@@ -11,8 +11,12 @@ const runChat = async (messageText) => {
     const createElement = () => ({
         children: [],
         dataset: {},
+        hidden: false,
         append(...children) {
             this.children.push(...children);
+        },
+        replaceChildren(...children) {
+            this.children = children;
         },
         focus() {},
         addEventListener(type, handler) {
@@ -24,10 +28,12 @@ const runChat = async (messageText) => {
         ".chat-toggle",
         "#chat-panel",
         ".chat-close",
+        ".chat-new",
         "#chat-messages",
-        "#chat-status",
+        "#chat-suggestions",
         "#chat-form",
-        "#chat-input"
+        "#chat-input",
+        ".chat-quick-questions"
     ]) {
         elements.set(selector, createElement());
     }
@@ -35,6 +41,7 @@ const runChat = async (messageText) => {
     const form = elements.get("#chat-form");
     const input = elements.get("#chat-input");
     const messageList = elements.get("#chat-messages");
+    const suggestions = elements.get("#chat-suggestions");
     input.value = messageText;
     form.querySelector = () => createElement();
     messageList.append = (...children) => messages.push(...children);
@@ -55,25 +62,23 @@ const runChat = async (messageText) => {
     });
 
     await form.onsubmit({ preventDefault() {} });
-    return messages;
+    return { messages, suggestions };
 };
 
-test("chat links a moving two-bedroom oven request to a prefilled quote", async () => {
-    const messages = await runChat(
+test("chat links a moving request to the current Home Cleaning quote", async () => {
+    const { messages, suggestions } = await runChat(
         "I'm moving out of a two-bedroom flat and need the oven cleaned."
     );
     const reply = messages.find((element) => element.className === "chat-message chat-message-assistant");
-    const actions = messages.find((element) => element.className === "chat-actions");
-    assert.match(reply.textContent, /Move-in and move-out cleaning/);
-    assert.ok(actions);
-    assert.equal(actions.children[0].href, "move-cleaning.html");
-    assert.equal(actions.children[0].textContent, "Explore Move-in / move-out cleaning");
+    assert.match(reply.textContent, /Home Cleaning or Deep Cleaning/);
+    assert.equal(suggestions.children[0].href, "residential-cleaning.html");
+    assert.equal(suggestions.children[0].textContent, "Explore Home Cleaning");
 
-    const quoteUrl = new URL(actions.children[1].href, "https://example.test/");
+    const quoteUrl = new URL(suggestions.children[1].href, "https://example.test/");
     assert.equal(quoteUrl.pathname, "/quote.html");
-    assert.equal(quoteUrl.searchParams.get("service"), "Move-in / move-out cleaning");
+    assert.equal(quoteUrl.searchParams.get("service"), "Home Cleaning");
     assert.equal(quoteUrl.searchParams.get("size"), "2–3 bedrooms");
-    assert.deepEqual(quoteUrl.searchParams.getAll("extras"), ["Oven cleaning"]);
+    assert.deepEqual(quoteUrl.searchParams.getAll("extras"), []);
     assert.equal(
         quoteUrl.searchParams.get("notes"),
         "I'm moving out of a two-bedroom flat and need the oven cleaned."
@@ -82,16 +87,13 @@ test("chat links a moving two-bedroom oven request to a prefilled quote", async 
 });
 
 test("support chat answers common questions without an AI service", async () => {
-    const messages = await runChat("How much does a deep clean cost?");
+    const { messages, suggestions } = await runChat("How much does a deep clean cost?");
     const reply = messages.find((element) => (
         element.className === "chat-message chat-message-assistant"
     ));
-    const actions = messages.find((element) => element.className === "chat-actions");
-
     assert.match(reply.textContent, /don’t publish set prices/);
-    assert.ok(actions);
-    assert.equal(actions.children[0].href, "deep-cleaning.html");
-    const quoteUrl = new URL(actions.children[1].href, "https://example.test/");
-    assert.equal(quoteUrl.searchParams.get("service"), "Deep cleaning");
+    assert.equal(suggestions.children[0].href, "deep-cleaning.html");
+    const quoteUrl = new URL(suggestions.children[1].href, "https://example.test/");
+    assert.equal(quoteUrl.searchParams.get("service"), "Deep Cleaning");
     assert.equal(quoteUrl.searchParams.get("notes"), "How much does a deep clean cost?");
 });
