@@ -1,13 +1,13 @@
 # NorwellSparkle
 
-## Order email setup
+## Quote email setup
 
-The order form is served by the Netlify Function at
-`/.netlify/functions/orders`. The function creates an order ID and sends the
-order details to `foyewole16@gmail.com` through Resend. An order is confirmed
-only after Resend accepts the email; orders are not stored in a database.
+The quote form is served by the Netlify Function at
+`/.netlify/functions/orders`. The function creates a reference ID and sends the
+quote details to `foyewole16@gmail.com` through Resend. A request is confirmed
+only after Resend accepts the email; requests are not stored in a database.
 
-To enable order submissions:
+To enable quote submissions:
 
 1. Deploy the site to Netlify so the function is available.
 2. Verify a sender address or domain with Resend.
@@ -15,10 +15,10 @@ To enable order submissions:
    `RESEND_FROM_EMAIL` (the verified sender address) as environment variables
    for Functions, then redeploy.
 
-If the order service cannot be reached, the form offers Gmail, Outlook, and
+If the quote service cannot be reached, the form offers Gmail, Outlook, and
 device-email draft links as a fallback. The customer must send the draft; it
-does not submit an order automatically. The online order form requires a
-Netlify deployment; static hosts such as GitHub Pages do not run the order
+does not submit a quote automatically. The online quote form requires a
+Netlify deployment; static hosts such as GitHub Pages do not run the quote
 function.
 
 Do not put the Resend API key in client-side code.

@@ -12,11 +12,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <div class="topline">Bringing Sparkle to Every Home</div>
     <header>
         <nav class="nav shell" aria-label="Main navigation">
             <a class="brand" href="index.html#home" aria-label="Norwell Sparkle home">
-                <img src="assets/norwell-sparkle-logo.png" alt="Norwell Sparkle">
+                <img src="assets/NorwellSparkle-header-logo.png" alt="Norwell Sparkle">
             </a>
             <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -50,7 +51,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-content" tabindex="-1">
         <section class="pricing-section">
             <div class="shell">
                 <div class="section-heading">
@@ -81,16 +82,16 @@
                     <article class="comparison-card">
                         <span class="comparison-type">A fresh start</span>
                         <h2>Move-in / move-out</h2>
-                        <p>Cleaning planned around your move, space, and preferred timing.</p>
+                        <p>Cleaning planned around your move date and handoff requirements.</p>
                         <a href="move-cleaning.html">Explore move cleaning <span aria-hidden="true">→</span></a>
                     </article>
                 </div>
 
                 <div class="quote-builder">
                     <div class="quote-builder-heading">
-                        <p class="eyebrow">Cleaning order</p>
+                        <p class="eyebrow">Request a quote</p>
                         <h2>Tell us about your clean.</h2>
-                        <p>Send your request and we’ll email Norwell Sparkle the details. Your order ID appears once the request is confirmed.</p>
+                        <p>Send your request and we’ll email Norwell Sparkle the details. A reference ID appears after the email is accepted.</p>
                     </div>
                     <form id="quote-form" class="quote-form">
                         <label class="quote-field order-honeypot" aria-hidden="true">
@@ -103,6 +104,10 @@
                                 <input name="name" type="text" autocomplete="name" maxlength="100" placeholder="Enter your name" required>
                             </label>
                             <label class="quote-field">
+                                <span>Email address</span>
+                                <input name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
+                            </label>
+                            <label class="quote-field">
                                 <span>Cleaning service</span>
                                 <select name="service" required>
                                     <option value="">Choose a service</option>
@@ -110,6 +115,7 @@
                                     <option value="Commercial &amp; office cleaning">Commercial &amp; office cleaning</option>
                                     <option value="Deep cleaning">Deep cleaning</option>
                                     <option value="Move-in / move-out cleaning">Move-in / move-out cleaning</option>
+                                    <option value="Carpet &amp; upholstery cleaning">Carpet &amp; upholstery cleaning</option>
                                 </select>
                             </label>
                             <label class="quote-field">
@@ -134,12 +140,12 @@
                             </label>
                         </div>
                         <fieldset class="quote-extras">
-                            <legend>Extras you’d like to ask about <span>(optional)</span></legend>
+                            <legend>Cleaning services you’d like to ask about <span>(optional)</span></legend>
                             <div class="extra-options">
-                                <label><input type="checkbox" name="extras" value="Oven cleaning"><span>Oven cleaning</span></label>
-                                <label><input type="checkbox" name="extras" value="Inside fridge"><span>Inside fridge</span></label>
-                                <label><input type="checkbox" name="extras" value="Interior windows"><span>Interior windows</span></label>
-                                <label><input type="checkbox" name="extras" value="Laundry folding"><span>Laundry folding</span></label>
+                                <label><input type="checkbox" name="extras" value="Home Cleaning"><span>Home Cleaning</span></label>
+                                <label><input type="checkbox" name="extras" value="Office &amp; Commercial Cleaning"><span>Office &amp; Commercial Cleaning</span></label>
+                                <label><input type="checkbox" name="extras" value="Deep Cleaning"><span>Deep Cleaning</span></label>
+                                <label><input type="checkbox" name="extras" value="Carpet &amp; Upholstery Cleaning"><span>Carpet &amp; Upholstery Cleaning</span></label>
                             </div>
                             <p>Extra services are requests only; availability will be confirmed with you.</p>
                         </fieldset>
@@ -147,7 +153,7 @@
                             <span>Anything else we should know? <span>(optional)</span></span>
                             <textarea name="notes" rows="3" maxlength="2000" placeholder="Priority rooms, timing, or other details"></textarea>
                         </label>
-                        <button class="button button-primary quote-submit" type="submit">Place order <span aria-hidden="true">→</span></button>
+                        <button class="button button-primary quote-submit" type="submit">Request a quote <span aria-hidden="true">→</span></button>
                     </form>
                     <p id="quote-status" class="quote-status" aria-live="polite"></p>
                     <div id="quote-email-fallback" class="quote-email-fallback" hidden>
@@ -160,10 +166,10 @@
                     </div>
 
                     <div id="quote-result" class="quote-result" hidden>
-                        <h3>Order confirmed</h3>
+                        <h3>Quote request sent</h3>
                         <pre id="quote-brief"></pre>
                         <div class="quote-result-actions">
-                            <button id="copy-quote" class="button button-secondary" type="button">Copy order details</button>
+                            <button id="copy-quote" class="button button-secondary" type="button">Copy quote details</button>
                         </div>
                     </div>
                 </div>
@@ -254,16 +260,18 @@
                 }
 
                 if (!response.ok) {
-                    throw new Error(result.error || "Your order could not be confirmed. Please try again.");
+                    throw new Error(result.error || "Your quote request could not be sent. Please try again.");
                 }
                 if (typeof result.orderId !== "string") {
-                    throw new Error("We could not verify the order confirmation. Please contact us before retrying.");
+                    throw new Error("We could not verify the quote confirmation. Please contact us before retrying.");
                 }
 
                 const extras = formData.getAll("extras").map(String);
                 quoteBrief.textContent = [
-                    `Order ID: ${result.orderId}`,
+                    `Reference ID: ${result.orderId}`,
                     `Customer name: ${String(formData.get("name")).trim()}`,
+                    `Email address: ${String(formData.get("email")).trim()}`,
+                    `Email address: ${String(formData.get("email")).trim()}`,
                     `Service: ${String(formData.get("service"))}`,
                     `Postcode / ZIP code: ${String(formData.get("postcode")).trim()}`,
                     `Home or space size: ${String(formData.get("size"))}`,
@@ -272,13 +280,13 @@
                     `Additional details: ${String(formData.get("notes")).trim() || "None"}`
                 ].join("\n");
                 quoteResult.hidden = false;
-                quoteStatus.textContent = "Your order details have been emailed to Norwell Sparkle.";
+                quoteStatus.textContent = "Your quote request has been emailed to Norwell Sparkle.";
                 quoteStatus.dataset.state = "success";
                 quoteForm.reset();
             } catch (error) {
                 quoteStatus.textContent = error instanceof Error
                     ? error.message
-                    : "Your order could not be confirmed. Please try again.";
+                    : "Your quote request could not be sent. Please try again.";
                 quoteStatus.dataset.state = "error";
                 const extras = formData.getAll("extras").map(String);
                 const emailBody = [
@@ -291,7 +299,7 @@
                     `Additional details: ${String(formData.get("notes")).trim() || "None"}`
                 ].join("\r\n");
                 const recipient = "foyewole16@gmail.com";
-                const subject = "Cleaning order request";
+                const subject = "Cleaning quote request";
                 const webmailQuery = new URLSearchParams({ to: recipient, subject, body: emailBody });
                 quoteGmailFallback.href = `https://mail.google.com/mail/?view=cm&fs=1&${webmailQuery}`;
                 quoteOutlookFallback.href = `https://outlook.live.com/mail/0/deeplink/compose?${webmailQuery}`;

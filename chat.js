@@ -18,7 +18,7 @@
                 </div>
                 <div class="chat-quick-questions" aria-label="Quick questions">
                     <button type="button">What services do you offer?</button>
-                    <button type="button">Hov do quotes vork?</button>
+                    <button type="button">How do quotes work?</button>
                     <button type="button">What extras can I request?</button>
                     <button type="button">Do you cover my area?</button>
                 </div>
@@ -71,18 +71,18 @@
             explicitPattern: /./
         },
         {
-            value: "Move-in / move-out cleaning",
-            page: "move-cleaning.html",
-            pattern: /\b(?:move[- ]in|move[- ]out|moving\s+(?:in|out)|tenancy|end[- ]of[- ]tenancy)\b/gi,
-            explicitPattern: /./
+            value: "Carpet & upholstery cleaning",
+            page: "quote.html",
+            pattern: /\b(?:carpet|rug|sofa|upholstery)\s*(?:clean(?:ing)?|service)?\b/gi,
+            explicitPattern: /\b(?:carpet|rug|sofa|upholstery)\b/i
         }
     ];
 
     const extrasOptions = [
-        { value: "Oven cleaning", pattern: /\boven(?:s)?\b/i },
-        { value: "Inside fridge", pattern: /\bfridge\b/i },
-        { value: "Interior windows", pattern: /\bwindows?\b/i },
-        { value: "Laundry folding", pattern: /\blaundry\b/i }
+        { value: "Home Cleaning", pattern: /\b(?:home|house|residential)\b/i },
+        { value: "Office & Commercial Cleaning", pattern: /\b(?:office|commercial|workplace)\b/i },
+        { value: "Deep Cleaning", pattern: /\bdeep\b/i },
+        { value: "Carpet & Upholstery Cleaning", pattern: /\b(?:carpet|rug|sofa|upholstery)\b/i }
     ];
 
     const isNegated = (text, index) => {

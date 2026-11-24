@@ -4,7 +4,8 @@ const services = new Set([
     "Residential cleaning",
     "Commercial & office cleaning",
     "Deep cleaning",
-    "Move-in / move-out cleaning"
+    "Move-in / move-out cleaning",
+    "Carpet & upholstery cleaning"
 ]);
 
 const sizes = new Set([
@@ -17,10 +18,10 @@ const sizes = new Set([
 ]);
 
 const availableExtras = new Set([
-    "Oven cleaning",
-    "Inside fridge",
-    "Interior windows",
-    "Laundry folding"
+    "Home Cleaning",
+    "Office & Commercial Cleaning",
+    "Deep Cleaning",
+    "Carpet & Upholstery Cleaning"
 ]);
 
 const jsonResponse = (body, status = 200) => new Response(JSON.stringify(body), {
@@ -63,6 +64,7 @@ export default async (request) => {
     }
 
     const name = trimmedString(order.name, 100);
+    const email = trimmedString(order.email, 254);
     const service = trimmedString(order.service, 80);
     const postcode = trimmedString(order.postcode, 24);
     const size = trimmedString(order.size, 80);
@@ -72,6 +74,8 @@ export default async (request) => {
 
     if (
         !name
+        || !email
+        || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
         || !service
         || !services.has(service)
         || !postcode
@@ -84,7 +88,7 @@ export default async (request) => {
         || extras.length > availableExtras.size
         || extras.some((extra) => typeof extra !== "string" || !availableExtras.has(extra))
     ) {
-        return jsonResponse({ error: "Please check the order details and try again." }, 400);
+        return jsonResponse({ error: "Please check the quote details and try again." }, 400);
     }
 
     const apiKey = process.env.RESEND_API_KEY;
@@ -98,6 +102,7 @@ export default async (request) => {
     const emailText = [
         `Order ID: ${orderId}`,
         `Customer name: ${name}`,
+        `Email address: ${email}`,
         `Service: ${service}`,
         `Postcode / ZIP code: ${postcode}`,
         `Home or space size: ${size}`,
@@ -116,7 +121,7 @@ export default async (request) => {
             body: JSON.stringify({
                 from,
                 to: ["foyewole16@gmail.com"],
-                subject: `Order confirmed: ${orderId}`,
+                subject: `Quote request: ${orderId}`,
                 text: emailText
             }),
             signal: AbortSignal.timeout(10000)
@@ -124,11 +129,11 @@ export default async (request) => {
 
         if (!emailResponse.ok) {
             console.error(`Resend rejected order email with status ${emailResponse.status}.`);
-            return jsonResponse({ error: "Your order could not be confirmed. Please try again later." }, 502);
+            return jsonResponse({ error: "Your quote request could not be sent. Please try again later." }, 502);
         }
     } catch (error) {
         console.error("Could not send order email:", error);
-        return jsonResponse({ error: "Your order could not be confirmed. Please try again later." }, 502);
+        return jsonResponse({ error: "Your quote request could not be sent. Please try again later." }, 502);
     }
 
     return jsonResponse({ orderId });
