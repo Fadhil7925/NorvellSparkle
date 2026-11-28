@@ -87,18 +87,18 @@ header {
     position: relative;
     min-height: 78px;
     display: grid;
-    grid-template-columns: 190px minmax(0, 1fr) auto;
+    grid-template-columns: 210px minmax(0, 1fr) auto;
     align-items: center;
     gap: 20px;
 }
 
 .brand {
     display: flex;
-    width: 190px;
+    width: 210px;
     align-items: center;
 }
 
-.brand img { width: 100%; height: auto; }
+.brand img { width: 100%; height: auto; max-height: 52px; object-fit: contain; object-position: left center; }
 
 .nav-links {
     display: flex;
